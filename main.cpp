@@ -1,6 +1,12 @@
 #include <iostream>
+#include "City.hpp"
 
 int main() {
-    std::cout << "Hello, World!" << std::endl;
+    City a {};
+    City b {};
+    City c {};
+    cout << a.getX() << endl;
+    cout << a.getY() << endl;
+
     return 0;
 }

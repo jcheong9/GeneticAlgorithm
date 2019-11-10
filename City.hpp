@@ -16,6 +16,19 @@ public:
     //cityIDCounter for the id generator
     static long cityIDCounter;
     City();
+
+    double getX() const;
+
+    void setX(double x);
+
+    double getY() const;
+
+    void setY(double y);
+
+    long getCityId() const;
+
+    void setCityId(long cityId);
+
     ~City() = default;
 
 };
