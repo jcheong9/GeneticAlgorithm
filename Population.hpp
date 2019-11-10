@@ -12,7 +12,6 @@ using namespace std;
 class Population{
 private:
     vector<Tour*> listTour;
-    Tour elite;
 public:
     Population() = default;
     Population(vector<Tour*> listTour) : listTour{std::move(listTour)} {}

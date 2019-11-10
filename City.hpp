@@ -17,16 +17,16 @@ public:
     static long cityIDCounter;
     City();
 
+    void swapping(City& a, City b) ;
+
+    City& operator = (const City &m);
+
+    //setters and getters
     double getX() const;
-
     void setX(double x);
-
     double getY() const;
-
     void setY(double y);
-
     long getCityId() const;
-
     void setCityId(long cityId);
 
     ~City() = default;

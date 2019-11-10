@@ -4,12 +4,12 @@
 
 #include <random>
 #include "City.hpp"
-long City::cityIDCounter = '1';
+long City::cityIDCounter = '10';
+default_random_engine randomEngine(time(0));
+uniform_real_distribution<double> distDoubleX(0.0,1000.0);
+uniform_real_distribution<double> distDoubleY(0.0,1000.0);
 
 City::City() {
-    default_random_engine randomEngine(time(0));
-    uniform_real_distribution<double> distDoubleX(0.0,1000.0);
-    uniform_real_distribution<double> distDoubleY(0.0,1000.0);
     x = distDoubleX(randomEngine);
     y = distDoubleY(randomEngine);
     cityID = cityIDCounter++;
@@ -37,5 +37,17 @@ long City::getCityId() const {
 
 void City::setCityId(long cityId) {
     cityID = cityId;
+}
+
+void City::swapping(City& a, City b) {
+    using std::swap;
+    swap(a.cityID,b.cityID);
+    swap(a.x,b.x);
+    swap(a.y,b.y);
+}
+
+City &City::operator=(const City &m)  {
+    swapping(*this, m);
+    return *this;
 }
 
