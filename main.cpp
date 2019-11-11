@@ -18,15 +18,26 @@ int main() {
     vector<City*> masterCities{&a, &b, &c, &d, &e};
     cout << "----------------"<< endl;
     Tour tour1{masterCities};
+    tour1.shuffle_cities();
     Tour tour2{masterCities};
+    tour2.shuffle_cities();
     Tour tour3{masterCities};
+    tour3.shuffle_cities();
     Tour tour4{masterCities};
+    tour4.shuffle_cities();
     Tour tour5{masterCities};
+    tour5.shuffle_cities();
     Tour tour6{masterCities};
+    tour6.shuffle_cities();
     Tour tour7{masterCities};
+    tour7.shuffle_cities();
     Tour tour8{masterCities};
+    tour8.shuffle_cities();
     Tour tour9{masterCities};
+    tour9.shuffle_cities();
     Tour tour10{masterCities};
+    tour10.shuffle_cities();
+
 
     cout << tour1 << endl;
     cout << tour2 << endl;
