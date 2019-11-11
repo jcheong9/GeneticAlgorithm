@@ -29,11 +29,10 @@ void Population::findEliteSelection() {
 Tour Population::crossover() {
     Tour parentA = select_parents();
     Tour parentB = select_parents();
+    NUMBER_OF_PARENTS = NUMBER_OF_PARENTS + 2;
     mt19937 generatorInt(rd());
     uniform_int_distribution<> distInt(0, parentA.getCityList().size());
     vector<City*> tmpCitiesList;
-//    cout << "ParentA\n" << parentA << endl;
-//    cout << "ParentB\n" << parentB << endl;
     for(vector<Tour*>::size_type i = 0; i < distInt(generatorInt); i++){
         tmpCitiesList.push_back(parentA.getCityList().at(i));
     }
@@ -74,23 +73,28 @@ Tour Population::select_parents() {
     return *tempTour.at(index);
 }
 
+//merge the children to current population.
+void Population::mergeToursCurrentPopulation() {
+    for(vector<Tour*>::size_type i = NUMBER_OF_ELITES; i < listTour.size(); i++){
+        cout << crossover() << endl;
+        setListTour(i, crossover());
+    }
+}
+
 //mutate of 30% of the total population and mutate at MUTATION_RATE. Mutation swap the adjacent city.
 void Population::mutate() {
     mt19937 generatorInt(rd());
-    uniform_int_distribution<> distInt(1, listTour.size()-1);
+    uniform_int_distribution<> distInt(0, listTour.size() - 1);
     uniform_real_distribution<double> distMutate(0.0,1);
     for(vector<Tour*>::size_type i = 0; i < listTour.size()*0.3; i++) {
         int indexTour = distInt(generatorInt);
         for (vector<City *>::size_type j = 1; j < listTour.at(indexTour)->getCityList().size(); j++) {
             if (distMutate(rdEngine) < MUTATION_RATE ) {
                 int nextInd = j - 1;
-//                cout << "Mutate1 \n" << listTour.at(indexTour)->getCityList().at(j)->getCityId() << endl;
-//                cout << "Swap \n" << listTour.at(indexTour)->getCityList().at(nextInd)->getCityId() << endl;
                 swap(*listTour.at(indexTour)->getCityList().at(j),*listTour.at(indexTour)->getCityList().at(nextInd));
-//                cout << "Done Swapping \n" << endl;
             }
         }
-        cout << *listTour.at(indexTour);
+//        cout << *listTour.at(indexTour);
     }
 }
 
@@ -104,8 +108,12 @@ vector<Tour *> Population::getListTour() const{
     return listTour;
 }
 
-void Population::setListTour(const vector<Tour *> listTour) {
-    Population::listTour = listTour;
+int Population::getNumberOfParents() const {
+    return NUMBER_OF_PARENTS;
+}
+
+void Population::addListTour(Tour* tour) {
+    listTour.push_back(tour);
 }
 
 //print population information
@@ -117,12 +125,13 @@ ostream &operator<<(ostream &os, const Population &m) {
     return os;
 }
 
-Population::~Population() {
-    while(!listTour.empty()){
-        delete listTour.back();
-        listTour.pop_back();
-    }
+void Population::setListTour(int index, Tour tour) {
+    listTour.at(index) = &tour;
 }
+
+
+
+
 
 
 

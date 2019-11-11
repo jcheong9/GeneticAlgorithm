@@ -12,7 +12,9 @@
 using namespace std;
 class Population{
 const int POPULATION_POOL_SIZE = 5;
+const int NUMBER_OF_ELITES = 1;
 private:
+    int NUMBER_OF_PARENTS = 0;
     vector<Tour*> listTour;
 public:
     //constructors
@@ -23,16 +25,19 @@ public:
     void findEliteSelection();
     Tour select_parents();
     Tour crossover();
+    void mergeToursCurrentPopulation();
     void mutate();
 
     //setters and getters
     vector<Tour *> getListTour() const;
-    void setListTour(vector<Tour *> listTour);
+    void addListTour(Tour* tour);
+    void setListTour(int index, Tour tour);
+    int getNumberOfParents() const;
 
     //overloading operators
     friend ostream &operator << (ostream &os, const Population &m);
 
     //destructors
-    ~Population();
+    ~Population() = default;
 };
 #endif //GENETICALGORITHM_POPULATION_HPP
