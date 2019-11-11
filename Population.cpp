@@ -4,7 +4,8 @@
 
 #include <random>
 #include "Population.hpp"
-
+//instantiate random device
+random_device rd;
 //find the elite in the list of population.
 void Population::findEliteSelection() {
     double bestFitness = listTour.at(0)->determine_fitness();
@@ -20,13 +21,20 @@ void Population::findEliteSelection() {
     listTour.erase(itBestFit);
     listTour.insert(listTour.begin(), x );
 }
-
+//crossing two parent return a child tour.
 Tour Population::crossover() {
+    Tour parentA = select_parents();
+    Tour parentB = select_parents();
+    vector<City*> tmpCitiesList;
+    uniform_int_distribution<> distInt(0, parentA.getCityList().size());
+    for(vector<Tour*>::size_type i = 1; i < parentA.getCityList().size()/2; i++){
+            tmpCitiesList.push_back(parentA.getCityList().at(i));
+    }
+            tmpCitiesList.push_back(parentA.getCityList().at(i));
 
 }
-
+//pick POPULATION_POOL_SIZE of original population and pick the fittest tour as parent
 Tour Population::select_parents() {
-    random_device rd;
     mt19937 generatorInt(rd());
     uniform_int_distribution<> distInt(0, listTour.size());
     //create sets
@@ -41,7 +49,6 @@ Tour Population::select_parents() {
             index = i;
         }
     }
-
     return *tempTour.at(index);
 }
 
