@@ -71,9 +71,7 @@ Tour Population::select_parents() {
     }
     return *tempTour.at(index);
 }
-void Population::improvement_factor() {
 
-}
 //mutate of 30% of the total population and mutate at MUTATION_RATE. Mutation swap the adjacent city.
 void Population::mutate() {
     mt19937 generatorInt(rd());
