@@ -24,7 +24,6 @@ public:
     void improvement_factor();
     Tour crossover();
 
-
     //setters and getters
     vector<Tour *> getListTour() const;
     void setListTour(vector<Tour *> listTour);

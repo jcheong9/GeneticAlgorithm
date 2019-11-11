@@ -3,6 +3,7 @@
 //
 
 #include <random>
+#include <iostream>
 #include "Population.hpp"
 //instantiate random device
 random_device rd;
@@ -17,26 +18,42 @@ void Population::findEliteSelection() {
             itBestFit = itBegin;
         }
     }
-    auto x = *itBestFit; // or std::move(*it)
-    listTour.erase(itBestFit);
-    listTour.insert(listTour.begin(), x );
+    swap(listTour.front(), *itBestFit);
 }
 //crossing two parent return a child tour.
 Tour Population::crossover() {
     Tour parentA = select_parents();
     Tour parentB = select_parents();
     vector<City*> tmpCitiesList;
-    uniform_int_distribution<> distInt(0, parentA.getCityList().size());
-    for(vector<Tour*>::size_type i = 1; i < parentA.getCityList().size()/2; i++){
+
+    for(vector<Tour*>::size_type i = 0; i < parentA.getCityList().size(); i++){
+        if(i < parentA.getCityList().size()/2)
             tmpCitiesList.push_back(parentA.getCityList().at(i));
+        else
+            break;
     }
-            tmpCitiesList.push_back(parentA.getCityList().at(i));
+    //copy b cities to temp city list
+    bool foundDuplicate;
+    for(vector<Tour*>::size_type i = 0; i < parentB.getCityList().size(); i++){
+        foundDuplicate = false;
+        for(vector<Tour*>::size_type j = 0; j < tmpCitiesList.size(); j++) {
+            if(tmpCitiesList.at(j)->getCityId() == parentB.getCityList().at(i)->getCityId()) {
+                foundDuplicate = true;
+                break;
+            }
+        }
+        if(!foundDuplicate && tmpCitiesList.size() < parentB.getCityList().size()){
+            tmpCitiesList.push_back(parentB.getCityList().at(i));
+        }
+    }
+    Tour temp{tmpCitiesList};
+    return temp;
 
 }
 //pick POPULATION_POOL_SIZE of original population and pick the fittest tour as parent
 Tour Population::select_parents() {
     mt19937 generatorInt(rd());
-    uniform_int_distribution<> distInt(0, listTour.size());
+    uniform_int_distribution<> distInt(0, listTour.size()-1);
     //create sets
     vector<Tour*> tempTour;
     for(int i = 0; i < POPULATION_POOL_SIZE; i++){

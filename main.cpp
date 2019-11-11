@@ -45,8 +45,13 @@ int main() {
 
     Population originalPopulation(populationList);
     originalPopulation.findEliteSelection();
-    originalPopulation.select_parents();
-    cout << originalPopulation;
+    cout << originalPopulation << endl;
+//    originalPopulation.select_parents();
+    cout << "Cross" << endl;
+//    cout << originalPopulation.select_parents();
+    Tour test = originalPopulation.crossover();
+    cout << originalPopulation.crossover();
+
     return 0;
 }
 
