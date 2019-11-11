@@ -73,11 +73,11 @@ Tour Population::select_parents() {
     return *tempTour.at(index);
 }
 
-//merge the children to current population.
+//merge the children to current population expect the elite.
 void Population::mergeToursCurrentPopulation() {
-    for(vector<Tour*>::size_type i = NUMBER_OF_ELITES; i < listTour.size(); i++){
-        cout << crossover() << endl;
-        setListTour(i, crossover());
+    for(vector<Tour*>::size_type i = NUMBER_OF_ELITES; i < listTour.size(); i++) {
+        Tour tmp = crossover();
+        listTour.at(i) = &tmp;
     }
 }
 
@@ -94,7 +94,6 @@ void Population::mutate() {
                 swap(*listTour.at(indexTour)->getCityList().at(j),*listTour.at(indexTour)->getCityList().at(nextInd));
             }
         }
-//        cout << *listTour.at(indexTour);
     }
 }
 
@@ -125,9 +124,6 @@ ostream &operator<<(ostream &os, const Population &m) {
     return os;
 }
 
-void Population::setListTour(int index, Tour tour) {
-    listTour.at(index) = &tour;
-}
 
 
 

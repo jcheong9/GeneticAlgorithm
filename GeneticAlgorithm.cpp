@@ -37,8 +37,7 @@ void GeneticAlgorithm::createCities() {
 
 // find the best fitness after crossover and mutate
 double GeneticAlgorithm::evaluateTourFitness() {
-    population.crossover();
-    population.mutate();
+    population.mergeToursCurrentPopulation();
     population.findEliteSelection();
     return population.getListTour().at(0)->determine_fitness();
 }
