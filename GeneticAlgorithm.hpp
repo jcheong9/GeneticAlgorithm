@@ -7,14 +7,17 @@
 
 #include <vector>
 #include "City.hpp"
+#include "Population.hpp"
 
 class GeneticAlgorithm {
-const int IMPROVEMENT_FACTOR  = 25;
+const int IMPROVEMENT_FACTOR  = 0.25;
 const int ITERATIONS = 1000;
+const int SHUFFLES = 64;
 private:
     int CITIES_IN_TOUR;
     int POPULATION_SIZE;
     vector<City*> masterCities;
+    Population population;
 public:
     GeneticAlgorithm() = default;
     GeneticAlgorithm(int city, int popsize);
@@ -25,6 +28,8 @@ public:
     ~GeneticAlgorithm();
 
     double evaluateTourFitness();
+
+    void createPopulation();
 };
 
 

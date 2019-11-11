@@ -22,7 +22,6 @@ public:
     //function prototypes
     void findEliteSelection();
     Tour select_parents();
-    void improvement_factor();
     Tour crossover();
     void mutate();
 
@@ -34,6 +33,6 @@ public:
     friend ostream &operator << (ostream &os, const Population &m);
 
     //destructors
-    ~Population() = default;
+    ~Population();
 };
 #endif //GENETICALGORITHM_POPULATION_HPP

@@ -8,6 +8,7 @@
 //instantiate random device
 random_device rd;
 default_random_engine rdEngine(time(0));
+
 //find the elite in the list of population.
 void Population::findEliteSelection() {
     double bestFitness = listTour.at(0)->determine_fitness();
@@ -23,6 +24,7 @@ void Population::findEliteSelection() {
     if(itBestFit != listTour.end())
         swap(listTour.front(), *itBestFit);
 }
+
 //crossing two parent return a child tour.
 Tour Population::crossover() {
     Tour parentA = select_parents();
@@ -51,8 +53,8 @@ Tour Population::crossover() {
     }
     Tour temp{tmpCitiesList};
     return temp;
-
 }
+
 //pick POPULATION_POOL_SIZE of original population and pick the fittest tour as parent
 Tour Population::select_parents() {
     mt19937 generatorInt(rd());
@@ -91,10 +93,12 @@ void Population::mutate() {
         cout << *listTour.at(indexTour);
     }
 }
+
 //constructor
 Population::Population(vector<Tour *> listTour) {
     this->listTour = listTour;
 }
+
 //setters and getters
 vector<Tour *> Population::getListTour() const{
     return listTour;
@@ -103,6 +107,7 @@ vector<Tour *> Population::getListTour() const{
 void Population::setListTour(const vector<Tour *> listTour) {
     Population::listTour = listTour;
 }
+
 //print population information
 ostream &operator<<(ostream &os, const Population &m) {
     for(vector<Tour>::size_type i = 0; i < m.listTour.size(); i++) {
@@ -110,6 +115,13 @@ ostream &operator<<(ostream &os, const Population &m) {
         os << to_string(m.listTour.at(i)->determine_fitness()) + "cost\n";
     }
     return os;
+}
+
+Population::~Population() {
+    while(!listTour.empty()){
+        delete listTour.back();
+        listTour.pop_back();
+    }
 }
 
 
