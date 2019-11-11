@@ -11,21 +11,24 @@ random_device rd;
 void Population::findEliteSelection() {
     double bestFitness = listTour.at(0)->determine_fitness();
     vector<Tour* >::iterator itBegin = listTour.begin();
-    vector<Tour* >::iterator itBestFit;
+    vector<Tour* >::iterator itBestFit = listTour.end();
     for(itBegin; itBegin != listTour.end(); itBegin++){
         if(bestFitness > itBegin.operator*()->determine_fitness()){
             bestFitness = itBegin.operator*()->determine_fitness();
             itBestFit = itBegin;
         }
     }
-    swap(listTour.front(), *itBestFit);
+    //swap if found better fittness to top of vector
+    if(itBestFit != listTour.end())
+        swap(listTour.front(), *itBestFit);
 }
 //crossing two parent return a child tour.
 Tour Population::crossover() {
     Tour parentA = select_parents();
     Tour parentB = select_parents();
     vector<City*> tmpCitiesList;
-
+    cout << "ParentA\n" << parentA << endl;
+    cout << "ParentB\n" << parentB << endl;
     for(vector<Tour*>::size_type i = 0; i < parentA.getCityList().size(); i++){
         if(i < parentA.getCityList().size()/2)
             tmpCitiesList.push_back(parentA.getCityList().at(i));

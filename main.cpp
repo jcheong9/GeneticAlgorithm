@@ -29,15 +29,15 @@ int main() {
     Tour tour10{masterCities};
 
     cout << tour1 << endl;
-    cout<< tour2 << endl;
-    cout<< tour3 << endl;
-    cout<< tour4 << endl;
-    cout<< tour5 << endl;
-    cout<< tour6 << endl;
-    cout<< tour7 << endl;
-    cout<< tour8 << endl;
-    cout<< tour9 << endl;
-    cout<< tour10 << endl;
+    cout << tour2 << endl;
+    cout << tour3 << endl;
+    cout << tour4 << endl;
+    cout << tour5 << endl;
+    cout << tour6 << endl;
+    cout << tour7 << endl;
+    cout << tour8 << endl;
+    cout << tour9 << endl;
+    cout << tour10 << endl;
 
 
     vector<Tour *> populationList{&tour1, &tour2, &tour3, &tour4, &tour6, &tour7, &tour8, &tour9, &tour10};
@@ -49,7 +49,6 @@ int main() {
 //    originalPopulation.select_parents();
     cout << "Cross" << endl;
 //    cout << originalPopulation.select_parents();
-    Tour test = originalPopulation.crossover();
     cout << originalPopulation.crossover();
 
     return 0;
