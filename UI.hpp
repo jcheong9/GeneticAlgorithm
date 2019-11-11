@@ -8,7 +8,8 @@ class UI{
 private:
 public:
     void start();
-
+    bool promptUserCities(int citiesInTour);
+    bool promptUserPopulation(int populationSize);
 };
 
 #endif //GENETICALGORITHM_UI_HPP

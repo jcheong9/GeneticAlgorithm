@@ -8,7 +8,7 @@ long City::cityIDCounter = '10';
 default_random_engine randomEngine(time(0));
 uniform_real_distribution<double> distDoubleX(0.0,1000.0);
 uniform_real_distribution<double> distDoubleY(0.0,1000.0);
-
+//constructor
 City::City() {
     x = distDoubleX(randomEngine);
     y = distDoubleY(randomEngine);

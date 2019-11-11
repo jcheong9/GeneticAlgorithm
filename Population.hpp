@@ -7,11 +7,11 @@
 
 #include <utility>
 #include "Tour.hpp"
-const int POPULATION_POOL_SIZE = 5;
-const int IMPROVEMENT_FACTOR  = 25;
+
 
 using namespace std;
 class Population{
+const int POPULATION_POOL_SIZE = 5;
 private:
     vector<Tour*> listTour;
 public:

@@ -12,13 +12,13 @@ private:
     double x;
     double y;
     long cityID;
+    void swapping(City& a, City b);
 public:
     //cityIDCounter for the id generator
     static long cityIDCounter;
+    //constructor
     City();
-
-    void swapping(City& a, City b) ;
-
+    //operator overloading
     City& operator = (const City &m);
 
     //setters and getters
