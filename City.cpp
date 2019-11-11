@@ -2,14 +2,14 @@
 // Created by jcheong on 2019-11-09.
 //
 
-#include <random>
+
 #include "City.hpp"
 long City::cityIDCounter = '10';
-default_random_engine randomEngine(time(0));
-uniform_real_distribution<double> distDoubleX(0.0,1000.0);
-uniform_real_distribution<double> distDoubleY(0.0,1000.0);
+default_random_engine City::randomEngine(time(0));
 //constructor
 City::City() {
+    uniform_real_distribution<double> distDoubleX(0.0,MAP_BOUNDARY);
+    uniform_real_distribution<double> distDoubleY(0.0,MAP_BOUNDARY);
     x = distDoubleX(randomEngine);
     y = distDoubleY(randomEngine);
     cityID = cityIDCounter++;

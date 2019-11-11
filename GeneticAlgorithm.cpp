@@ -10,6 +10,7 @@ GeneticAlgorithm::GeneticAlgorithm(int city, int popsize) : CITIES_IN_TOUR{city}
 
 void GeneticAlgorithm::startAlgo() {
     createCities();
+
     double fitness = evaluateTourFitness();
     int iterations = 0;
     while(fitness < improvement || iterations < ITERATIONS){
