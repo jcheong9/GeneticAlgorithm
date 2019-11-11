@@ -71,24 +71,26 @@ Tour Population::select_parents() {
     }
     return *tempTour.at(index);
 }
+void Population::improvement_factor() {
+
+}
+//mutate of 30% of the total population and mutate at MUTATION_RATE. Mutation swap the adjacent city.
 void Population::mutate() {
     mt19937 generatorInt(rd());
-    uniform_int_distribution<> distInt(1, listTour.size());
+    uniform_int_distribution<> distInt(1, listTour.size()-1);
     uniform_real_distribution<double> distMutate(0.0,1);
-    int numberSelectedMutate = 0;
-    for(vector<Tour*>::size_type i = 0; i < listTour.size()*0.3; i++){
-//        for(vector<City*>::size_type  j = 0;j < listTour.at(distInt(generatorInt))->getCityList().size();j++){
-        int index = distInt(generatorInt);
-        auto itBegin = listTour.at(index)->getCityList().begin();
-        auto itEnd = listTour.at(index)->getCityList().end();
-        for(itBegin ;itBegin != itEnd; itBegin++){
-            if(distMutate(rdEngine) < MUTATION_RATE && itBegin != itEnd-1){
-                cout << "Mutate1 \n" << itBegin.operator*()->getCityId() << endl;
-                swap(*itBegin,*(++itBegin));
-                cout << "Swap \n" << itBegin.operator*()->getCityId() << endl;
+    for(vector<Tour*>::size_type i = 0; i < listTour.size()*0.3; i++) {
+        int indexTour = distInt(generatorInt);
+        for (vector<City *>::size_type j = 1; j < listTour.at(indexTour)->getCityList().size(); j++) {
+            if (distMutate(rdEngine) < MUTATION_RATE ) {
+                int nextInd = j - 1;
+//                cout << "Mutate1 \n" << listTour.at(indexTour)->getCityList().at(j)->getCityId() << endl;
+//                cout << "Swap \n" << listTour.at(indexTour)->getCityList().at(nextInd)->getCityId() << endl;
+                swap(*listTour.at(indexTour)->getCityList().at(j),*listTour.at(indexTour)->getCityList().at(nextInd));
+//                cout << "Done Swapping \n" << endl;
             }
         }
-        cout << *listTour.at(index);
+        cout << *listTour.at(indexTour);
     }
 }
 //constructor
@@ -111,4 +113,6 @@ ostream &operator<<(ostream &os, const Population &m) {
     }
     return os;
 }
+
+
 
