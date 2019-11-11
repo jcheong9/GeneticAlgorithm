@@ -6,8 +6,9 @@
 #define GENETICALGORITHM_POPULATION_HPP
 
 #include <utility>
-
 #include "Tour.hpp"
+const int POPULATION_POOL_SIZE = 5;
+
 using namespace std;
 class Population{
 private:
@@ -19,8 +20,9 @@ public:
 
     //function prototypes
     void findEliteSelection();
-    void select_parents();
+    Tour select_parents();
     void improvement_factor();
+    Tour crossover();
 
 
     //setters and getters

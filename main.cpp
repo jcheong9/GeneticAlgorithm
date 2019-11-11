@@ -18,20 +18,23 @@ int main() {
     vector<City*> masterCities{&a, &b, &c, &d, &e};
 
     Tour tour1{masterCities};
-    cout << tour1 << endl;
-    tour1.shuffle_cities();
-    cout << tour1 << endl;
     Tour tour2{masterCities};
     Tour tour3{masterCities};
     Tour tour4{masterCities};
-    vector<Tour *> populationList{&tour1, &tour2, &tour3, &tour4};
+    Tour tour5{masterCities};
+    Tour tour6{masterCities};
+    Tour tour7{masterCities};
+    Tour tour8{masterCities};
+    Tour tour9{masterCities};
+    Tour tour10{masterCities};
+
+    vector<Tour *> populationList{&tour1, &tour2, &tour3, &tour4, &tour6, &tour7, &tour8, &tour9, &tour10};
     tour1.get_tour_distance();
-//    Population originalPopulation(populationList);
-//    originalPopulation.findEliteSelection();
-//    cout << originalPopulation;
+
+
+    Population originalPopulation(populationList);
+    originalPopulation.findEliteSelection();
+    cout << originalPopulation;
     return 0;
 }
 
-void crossover() {
-
-}
