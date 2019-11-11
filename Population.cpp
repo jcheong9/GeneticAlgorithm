@@ -76,8 +76,9 @@ Tour Population::select_parents() {
 //merge the children to current population expect the elite.
 void Population::mergeToursCurrentPopulation() {
     for(vector<Tour*>::size_type i = NUMBER_OF_ELITES; i < listTour.size(); i++) {
-        Tour tmp = crossover();
-        listTour.at(i) = &tmp;
+//        Tour tmp = crossover();
+        *listTour.at(i) = crossover();
+        cout << i << endl;
     }
 }
 
