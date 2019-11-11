@@ -10,7 +10,7 @@
 
 class GeneticAlgorithm {
 const int IMPROVEMENT_FACTOR  = 25;
-
+const int ITERATIONS = 1000;
 private:
     int CITIES_IN_TOUR;
     int POPULATION_SIZE;
@@ -18,11 +18,11 @@ private:
 public:
     GeneticAlgorithm() = default;
     GeneticAlgorithm(int city, int popsize);
-    ~GeneticAlgorithm() = default;
 
     void startAlgo();
 
     void createCities();
+    ~GeneticAlgorithm();
 };
 
 
