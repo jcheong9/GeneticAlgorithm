@@ -7,6 +7,7 @@
 #include "Population.hpp"
 //instantiate random device
 random_device rd;
+default_random_engine rdEngine(time(0));
 //find the elite in the list of population.
 void Population::findEliteSelection() {
     double bestFitness = listTour.at(0)->determine_fitness();
@@ -26,14 +27,13 @@ void Population::findEliteSelection() {
 Tour Population::crossover() {
     Tour parentA = select_parents();
     Tour parentB = select_parents();
+    mt19937 generatorInt(rd());
+    uniform_int_distribution<> distInt(0, parentA.getCityList().size());
     vector<City*> tmpCitiesList;
-    cout << "ParentA\n" << parentA << endl;
-    cout << "ParentB\n" << parentB << endl;
-    for(vector<Tour*>::size_type i = 0; i < parentA.getCityList().size(); i++){
-        if(i < parentA.getCityList().size()/2)
-            tmpCitiesList.push_back(parentA.getCityList().at(i));
-        else
-            break;
+//    cout << "ParentA\n" << parentA << endl;
+//    cout << "ParentB\n" << parentB << endl;
+    for(vector<Tour*>::size_type i = 0; i < distInt(generatorInt); i++){
+        tmpCitiesList.push_back(parentA.getCityList().at(i));
     }
     //copy b cities to temp city list
     bool foundDuplicate;
@@ -71,7 +71,26 @@ Tour Population::select_parents() {
     }
     return *tempTour.at(index);
 }
-
+void Population::mutate() {
+    mt19937 generatorInt(rd());
+    uniform_int_distribution<> distInt(1, listTour.size());
+    uniform_real_distribution<double> distMutate(0.0,1);
+    int numberSelectedMutate = 0;
+    for(vector<Tour*>::size_type i = 0; i < listTour.size()*0.3; i++){
+//        for(vector<City*>::size_type  j = 0;j < listTour.at(distInt(generatorInt))->getCityList().size();j++){
+        int index = distInt(generatorInt);
+        auto itBegin = listTour.at(index)->getCityList().begin();
+        auto itEnd = listTour.at(index)->getCityList().end();
+        for(itBegin ;itBegin != itEnd; itBegin++){
+            if(distMutate(rdEngine) < MUTATION_RATE && itBegin != itEnd-1){
+                cout << "Mutate1 \n" << itBegin.operator*()->getCityId() << endl;
+                swap(*itBegin,*(++itBegin));
+                cout << "Swap \n" << itBegin.operator*()->getCityId() << endl;
+            }
+        }
+        cout << *listTour.at(index);
+    }
+}
 //constructor
 Population::Population(vector<Tour *> listTour) {
     this->listTour = listTour;

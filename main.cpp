@@ -50,17 +50,19 @@ int main() {
     cout << tour9 << endl;
     cout << tour10 << endl;
 
-
+    cout << "-------Population-------" << endl;
     vector<Tour *> populationList{&tour1, &tour2, &tour3, &tour4, &tour6, &tour7, &tour8, &tour9, &tour10};
 //    tour1.get_tour_distance();
 
     Population originalPopulation(populationList);
     originalPopulation.findEliteSelection();
     cout << originalPopulation << endl;
+    cout << "-------Mutate-------" << endl;
+    originalPopulation.mutate();
 //    originalPopulation.select_parents();
     cout << "Cross" << endl;
 //    cout << originalPopulation.select_parents();
-    cout << originalPopulation.crossover();
+//    cout << originalPopulation.crossover();
 
     return 0;
 }

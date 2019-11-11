@@ -23,6 +23,7 @@ public:
     Tour select_parents();
     void improvement_factor();
     Tour crossover();
+    void mutate();
 
     //setters and getters
     vector<Tour *> getListTour() const;
