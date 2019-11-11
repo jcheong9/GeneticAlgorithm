@@ -11,10 +11,11 @@ GeneticAlgorithm::GeneticAlgorithm(int city, int popsize) : CITIES_IN_TOUR{city}
 void GeneticAlgorithm::startAlgo() {
     createCities();
 
-    double fitness = evaluateTourFitness();
+    double base_distance = evaluateTourFitness();
     int iterations = 0;
+    double improvment = best_distance / base_distance;
     while(fitness < improvement || iterations < ITERATIONS){
-        
+
     }
 }
 
@@ -29,4 +30,9 @@ GeneticAlgorithm::~GeneticAlgorithm() {
         delete masterCities.back();
         masterCities.pop_back();
     }
+}
+
+double GeneticAlgorithm::evaluateTourFitness() {
+
+    return 0;
 }

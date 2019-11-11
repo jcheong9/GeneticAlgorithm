@@ -23,6 +23,8 @@ public:
 
     void createCities();
     ~GeneticAlgorithm();
+
+    double evaluateTourFitness();
 };
 
 
