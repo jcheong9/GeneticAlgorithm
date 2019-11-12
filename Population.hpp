@@ -13,10 +13,14 @@ using namespace std;
 class Population{
 const int POPULATION_POOL_SIZE = 5;
 const int NUMBER_OF_ELITES = 1;
+const double POPULATION_MUTATION = 0.3;
 private:
     int NUMBER_OF_PARENTS = 0;
     vector<Tour*> listTour;
 public:
+    // instantiate random engine
+    random_device rd;
+
     //constructors
     Population() = default;
     explicit Population(vector<Tour*> listTour);

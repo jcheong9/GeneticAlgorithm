@@ -7,9 +7,7 @@
 
 using namespace std;
 int main() {
-    UI ui{};
-    ui.start();
-
+    UI::start();
     return 0;
 }
 

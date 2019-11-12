@@ -5,11 +5,11 @@
 #ifndef GENETICALGORITHM_UI_HPP
 #define GENETICALGORITHM_UI_HPP
 class UI{
-private:
 public:
-    void start();
-    bool promptUserCities(int* citiesInTour);
-    bool promptUserPopulation(int* populationSize);
+    //function prototype.
+    static void start();
+    static bool promptUserCities(int* citiesInTour);
+    static bool promptUserPopulation(int* populationSize);
 };
 
 #endif //GENETICALGORITHM_UI_HPP

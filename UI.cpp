@@ -15,10 +15,10 @@ void UI::start() {
     if(promptUserCities( &citiesInTour) && promptUserPopulation(&populationSize)){
         GeneticAlgorithm ga(citiesInTour, populationSize);
     }else{
-        cout << "Program ends input is not a number or equal to zero";
+        cout << "Program ends input is not a number or equal to zero or greater than 2";
     }
 }
-
+//prompt the user for number of cities
 bool UI::promptUserCities(int* citiesInTour) {
     stringstream stream;
     string str = "";
@@ -30,6 +30,7 @@ bool UI::promptUserCities(int* citiesInTour) {
     return *citiesInTour > 1;
 }
 
+//prompt the user for number of population size
 bool UI::promptUserPopulation(int* populationSize) {
     stringstream stream;
     string str = "";

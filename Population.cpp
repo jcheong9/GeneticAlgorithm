@@ -6,15 +6,13 @@
 #include <iostream>
 #include "Population.hpp"
 //instantiate random device
-random_device rd;
 default_random_engine rdEngine(time(0));
 
 //find the elite in the list of population.
 void Population::findEliteSelection() {
     double bestFitness = listTour.at(0)->determine_fitness();
-    vector<Tour* >::iterator itBegin = listTour.begin();
-    vector<Tour* >::iterator itBestFit = listTour.end();
-    for(itBegin; itBegin != listTour.end(); itBegin++){
+    auto itBestFit = listTour.end();
+    for(auto itBegin = listTour.begin(); itBegin != listTour.end(); itBegin++){
         if(bestFitness < itBegin.operator*()->determine_fitness()){
             bestFitness = itBegin.operator*()->determine_fitness();
             itBestFit = itBegin;
@@ -75,7 +73,7 @@ Tour Population::select_parents() {
 //merge the children to current population expect the elite.
 void Population::mergeToursCurrentPopulation() {
     vector<Tour*> tmp {listTour.at(0)};
-    for(vector<Tour*>::size_type i = 1; i < listTour.size(); i++) {
+    for(vector<Tour*>::size_type i = NUMBER_OF_ELITES; i < listTour.size(); i++) {
         tmp.push_back(crossover());
     }
     listTour = tmp;
@@ -84,9 +82,9 @@ void Population::mergeToursCurrentPopulation() {
 //mutate of 30% of the total population and mutate at MUTATION_RATE. Mutation swap the adjacent city.
 void Population::mutate() {
     mt19937 generatorInt(rd());
-    uniform_int_distribution<> distInt(1, listTour.size() - 1);
+    uniform_int_distribution<> distInt(0, listTour.size() - 1);
     uniform_real_distribution<double> distMutate(0.0,1);
-    for(vector<Tour*>::size_type i = 0; i < listTour.size()*0.3; i++) {
+    for(vector<Tour*>::size_type i = 0; i < listTour.size() * POPULATION_MUTATION; i++) {
         int indexTour = distInt(generatorInt);
         for (vector<City *>::size_type j = 1; j < listTour.at(indexTour)->getCityList().size(); j++) {
             if (distMutate(rdEngine) < MUTATION_RATE ) {
@@ -123,6 +121,7 @@ ostream &operator<<(ostream &os, const Population &m) {
     }
     return os;
 }
+
 
 
 

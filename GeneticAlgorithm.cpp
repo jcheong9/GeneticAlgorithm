@@ -13,20 +13,27 @@ void GeneticAlgorithm::startAlgo() {
     createCities();
     createPopulation();
     population.findEliteSelection();
+    Tour* base_tour = population.getListTour().at(0);
     double base_distance = population.getListTour().at(0)->determine_fitness();
     double best_distance = population.getListTour().at(0)->determine_fitness();
     int iterations = 0;
-    double improvement = 0;
-    while(iterations < ITERATIONS || improvement < IMPROVEMENT_FACTOR ){
+    double improvement = 0.0;
+    bool achieved = false;
+    while(iterations < ITERATIONS ){
+        if(improvement > IMPROVEMENT_FACTOR){
+            achieved = true;
+            break;
+        }
+        cout << "-----------------\n" << "Iteration Number: " << iterations << endl;
         best_distance = evaluateTourFitness();
+        cout << "Best distance: " << best_distance << endl;
         improvement = (best_distance - base_distance) / base_distance;
+        cout << "Current Improvement: " << improvement << endl;
         iterations++;
     }
-    cout << "-----------------\n" << "Iterations: " << iterations << endl;
-    cout << "Base distance: " << base_distance << endl;
-    cout << "Best distance: " << best_distance << endl;
-    cout << "Improvement: " << improvement << endl;
+    printFinalReport(achieved, iterations, base_distance, best_distance, improvement, *base_tour);
 }
+
 //initiate the master cities
 void GeneticAlgorithm::createCities() {
     for(int i = 0; i < CITIES_IN_TOUR; i++ ){
@@ -36,11 +43,8 @@ void GeneticAlgorithm::createCities() {
 
 // find the best fitness after crossover and mutate
 double GeneticAlgorithm::evaluateTourFitness() {
-//    cout << "Before merge \n" << population << endl;
     population.mergeToursCurrentPopulation();
-//    cout << "After merge \n" << population << endl;
     population.findEliteSelection();
-//    cout << "After find elite \n" << population << endl;
     return population.getListTour().at(0)->determine_fitness();
 }
 
@@ -54,6 +58,20 @@ void GeneticAlgorithm::createPopulation() {
     }
 }
 
+//print the final report after the genetic algorithm is completed.
+void GeneticAlgorithm::printFinalReport(bool achieved, int iterations, double base_distance, double best_distance,
+                                        double improvement, Tour base_tour) {
+    cout << "-----------------\n" << "Number Iterations: " << iterations << endl;
+    cout << "Base distance: " << base_distance << endl;
+    cout << "Best distance: " << best_distance << endl;
+    cout << "Improvement factor achieved: ";
+    string str = achieved ? ("true\n") : ("false\n");
+    cout << str;
+    cout << "Improvement: " << improvement << endl;
+    cout << "Base tour route: \n" << base_tour << endl;
+    cout << "Best route take: \n" << *population.getListTour().at(0) << endl;
+}
+
 //destructor delete the allocated memories
 GeneticAlgorithm::~GeneticAlgorithm() {
     while(!masterCities.empty()){
@@ -65,3 +83,5 @@ GeneticAlgorithm::~GeneticAlgorithm() {
         population.getListTour().pop_back();
     }
 }
+
+

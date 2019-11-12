@@ -10,7 +10,7 @@
 #include "Population.hpp"
 
 class GeneticAlgorithm {
-const double IMPROVEMENT_FACTOR  = 0.25;
+const double IMPROVEMENT_FACTOR = 0.25;
 const int ITERATIONS = 1000;
 const int SHUFFLES = 64;
 private:
@@ -19,17 +19,18 @@ private:
     vector<City*> masterCities;
     Population population;
 public:
+    //constructors
     GeneticAlgorithm() = default;
     GeneticAlgorithm(int city, int popsize);
-
+    //function prototype
     void startAlgo();
-
     void createCities();
-    ~GeneticAlgorithm();
-
+    void printFinalReport(bool achieved, int iterations, double distance, double distance1,
+            double improvement, Tour tour);
     double evaluateTourFitness();
-
     void createPopulation();
+    //destructor
+    ~GeneticAlgorithm();
 };
 
 
