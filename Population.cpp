@@ -3,7 +3,6 @@
 //
 
 #include <random>
-#include <iostream>
 #include "Population.hpp"
 //instantiate random device
 default_random_engine rdEngine(time(0));

@@ -7,7 +7,7 @@
 
 #include <utility>
 #include "Tour.hpp"
-
+#include <random>
 
 using namespace std;
 class Population{
