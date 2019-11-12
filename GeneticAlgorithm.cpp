@@ -16,17 +16,16 @@ void GeneticAlgorithm::startAlgo() {
     double base_distance = population.getListTour().at(0)->determine_fitness();
     double best_distance = population.getListTour().at(0)->determine_fitness();
     int iterations = 0;
-    double improvement = best_distance / base_distance;
-    while(improvement < IMPROVEMENT_FACTOR || iterations < ITERATIONS){
-        cout << population << endl;
+    double improvement = 0;
+    while(iterations < ITERATIONS || improvement < IMPROVEMENT_FACTOR ){
         best_distance = evaluateTourFitness();
-        improvement = best_distance / base_distance;
+        improvement = (best_distance - base_distance) / base_distance;
         iterations++;
     }
-    cout << "-----------------\n" << iterations << endl;
-    cout << base_distance << endl;
-    cout << best_distance << endl;
-    cout << improvement << endl;
+    cout << "-----------------\n" << "Iterations: " << iterations << endl;
+    cout << "Base distance: " << base_distance << endl;
+    cout << "Best distance: " << best_distance << endl;
+    cout << "Improvement: " << improvement << endl;
 }
 //initiate the master cities
 void GeneticAlgorithm::createCities() {
@@ -37,8 +36,11 @@ void GeneticAlgorithm::createCities() {
 
 // find the best fitness after crossover and mutate
 double GeneticAlgorithm::evaluateTourFitness() {
+//    cout << "Before merge \n" << population << endl;
     population.mergeToursCurrentPopulation();
+//    cout << "After merge \n" << population << endl;
     population.findEliteSelection();
+//    cout << "After find elite \n" << population << endl;
     return population.getListTour().at(0)->determine_fitness();
 }
 

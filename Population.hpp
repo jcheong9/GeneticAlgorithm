@@ -24,7 +24,7 @@ public:
     //function prototypes
     void findEliteSelection();
     Tour select_parents();
-    Tour crossover();
+    Tour* crossover();
     void mergeToursCurrentPopulation();
     void mutate();
 

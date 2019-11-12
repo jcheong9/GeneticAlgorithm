@@ -10,7 +10,7 @@
 #include "Population.hpp"
 
 class GeneticAlgorithm {
-const int IMPROVEMENT_FACTOR  = 0.25;
+const double IMPROVEMENT_FACTOR  = 0.25;
 const int ITERATIONS = 1000;
 const int SHUFFLES = 64;
 private:

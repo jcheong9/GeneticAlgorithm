@@ -15,7 +15,7 @@ void Population::findEliteSelection() {
     vector<Tour* >::iterator itBegin = listTour.begin();
     vector<Tour* >::iterator itBestFit = listTour.end();
     for(itBegin; itBegin != listTour.end(); itBegin++){
-        if(bestFitness > itBegin.operator*()->determine_fitness()){
+        if(bestFitness < itBegin.operator*()->determine_fitness()){
             bestFitness = itBegin.operator*()->determine_fitness();
             itBestFit = itBegin;
         }
@@ -26,7 +26,7 @@ void Population::findEliteSelection() {
 }
 
 //crossing two parent return a child tour.
-Tour Population::crossover() {
+Tour* Population::crossover() {
     Tour parentA = select_parents();
     Tour parentB = select_parents();
     NUMBER_OF_PARENTS = NUMBER_OF_PARENTS + 2;
@@ -50,8 +50,7 @@ Tour Population::crossover() {
             tmpCitiesList.push_back(parentB.getCityList().at(i));
         }
     }
-    Tour temp{tmpCitiesList};
-    return temp;
+    return new Tour{tmpCitiesList};
 }
 
 //pick POPULATION_POOL_SIZE of original population and pick the fittest tour as parent
@@ -75,17 +74,17 @@ Tour Population::select_parents() {
 
 //merge the children to current population expect the elite.
 void Population::mergeToursCurrentPopulation() {
-    for(vector<Tour*>::size_type i = NUMBER_OF_ELITES; i < listTour.size(); i++) {
-//        Tour tmp = crossover();
-        *listTour.at(i) = crossover();
-        cout << i << endl;
+    vector<Tour*> tmp {listTour.at(0)};
+    for(vector<Tour*>::size_type i = 1; i < listTour.size(); i++) {
+        tmp.push_back(crossover());
     }
+    listTour = tmp;
 }
 
 //mutate of 30% of the total population and mutate at MUTATION_RATE. Mutation swap the adjacent city.
 void Population::mutate() {
     mt19937 generatorInt(rd());
-    uniform_int_distribution<> distInt(0, listTour.size() - 1);
+    uniform_int_distribution<> distInt(1, listTour.size() - 1);
     uniform_real_distribution<double> distMutate(0.0,1);
     for(vector<Tour*>::size_type i = 0; i < listTour.size()*0.3; i++) {
         int indexTour = distInt(generatorInt);

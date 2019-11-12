@@ -50,8 +50,10 @@
     originalPopulation.findEliteSelection();
     cout << originalPopulation << endl;
     cout << "-------Mutate-------" << endl;
-    originalPopulation.mutate();
+//    originalPopulation.mutate();
 //    originalPopulation.select_parents();
     cout << "Cross" << endl;
 //    cout << originalPopulation.select_parents();
 //    cout << originalPopulation.crossover();
+    originalPopulation.mergeToursCurrentPopulation();
+    cout << originalPopulation << endl;
