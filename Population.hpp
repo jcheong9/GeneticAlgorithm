@@ -16,25 +16,25 @@ const int NUMBER_OF_ELITES = 1;
 const double POPULATION_MUTATION = 0.3;
 private:
     int NUMBER_OF_PARENTS = 0;
-    vector<Tour*> listTour;
+    vector<Tour> listTour;
 public:
     // instantiate random engine
     random_device rd;
 
     //constructors
     Population() = default;
-    explicit Population(vector<Tour*> listTour);
+    explicit Population(vector<Tour> listTour);
 
     //function prototypes
     void findEliteSelection();
     Tour select_parents();
-    Tour* crossover();
+    Tour crossover();
     void mergeToursCurrentPopulation();
     void mutate();
 
     //setters and getters
-    vector<Tour *> getListTour() const;
-    void addListTour(Tour* tour);
+    vector<Tour > getListTour() const;
+    void addListTour(Tour tour);
     int getNumberOfParents() const;
 
     //overloading operators

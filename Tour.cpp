@@ -9,11 +9,11 @@
 #include <iostream>
 //instantiate random device
 random_device randDevice;
-
-//tour ID counter
-long Tour::tourIDCounter = 0;
 // instantiate random engine
 auto rn = default_random_engine{};
+//tour ID counter
+long Tour::tourIDCounter = 0;
+
 
 //constructor
 Tour::Tour(vector<City *> cityList) {
@@ -23,7 +23,7 @@ Tour::Tour(vector<City *> cityList) {
 
 //find the fitness of the tour
 double Tour::determine_fitness() const {
-    return (1 / totalDistance()) * 1000000;
+    return (1 / totalDistance()) * 100000;
 }
 
 //calculating the total distance
@@ -51,12 +51,6 @@ void Tour::get_tour_distance() {
         << cityList.at(i - 1)->getCityId() << " : "
         << get_distance_between_cities( *cityList.at(i), *cityList.at(i - 1)) << endl;
     }
-}
-
-// shuffle the cities
-void Tour::shuffle_cities() {
-    //shuffle randomly of cityList before assign it.
-    shuffle(cityList.begin(),cityList.end(),rn);
 }
 
 //find if the city in this tour
@@ -99,14 +93,21 @@ long Tour::getTourId() const {
     return tourID;
 }
 
+Tour& Tour::operator=(Tour &m) {
+    using std::swap;
+    swap(this->cityList,m.cityList);
+    swap(this->tourID, m.tourID);
+};
+
 //prints the list of cities in tour
 ostream &operator<<(ostream &os, const Tour &m) {
-    os << "Tour ID: " + to_string(m.tourID) + "\n";
-    os << "Fitness: " + to_string(m.determine_fitness()) + "\n";
+    os << "Tour ID: " + to_string(m.tourID) << endl;
+    os << "Fitness: " + to_string(m.determine_fitness()) << endl;
+    os << "Total distance tour: " + to_string(m.totalDistance()) << endl;
     for(vector<City>::size_type i = 0; i < m.cityList.size(); i++){
         os << "City ID: " + to_string(m.cityList.at(i)->getCityId()) + " ";
         os << "x: " +to_string(m.cityList.at(i)->getX()) + " ";
-        os << "y: " +to_string(m.cityList.at(i)->getY()) + "\n";
+        os << "y: " +to_string(m.cityList.at(i)->getY()) << endl;
     }
     return os;
 }

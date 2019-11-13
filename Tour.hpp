@@ -39,6 +39,7 @@ public:
     long getTourId() const;
 
     //overloading operators
+    Tour& operator=(Tour &m);
     friend ostream &operator << (ostream &os, const Tour &m);
     Tour& operator = (const Tour & m);
     //destructor

@@ -11,12 +11,12 @@
 
 class GeneticAlgorithm {
 const double IMPROVEMENT_FACTOR = 0.25;
-const int ITERATIONS = 1000;
+const int ITERATIONS = 10;
 const int SHUFFLES = 64;
 private:
     int CITIES_IN_TOUR;
     int POPULATION_SIZE;
-    vector<City*> masterCities;
+    vector<City *> masterCities;
     Population population;
 public:
     //constructors

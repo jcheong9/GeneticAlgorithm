@@ -30,30 +30,48 @@
     Tour tour10{masterCities};
     tour10.shuffle_cities();
 
+    cout << "-------Shuffle-------" << endl;
 
     cout << tour1 << endl;
-    cout << tour2 << endl;
-    cout << tour3 << endl;
-    cout << tour4 << endl;
-    cout << tour5 << endl;
-    cout << tour6 << endl;
-    cout << tour7 << endl;
-    cout << tour8 << endl;
-    cout << tour9 << endl;
-    cout << tour10 << endl;
+    tour1.shuffle_cities();
+    cout << tour1 << endl;
+//    cout << tour2 << endl;
+//    cout << tour3 << endl;
+//    cout << tour4 << endl;
+//    cout << tour5 << endl;
+//    cout << tour6 << endl;
+//    cout << tour7 << endl;
+//    cout << tour8 << endl;
+//    cout << tour9 << endl;
+//    cout << tour10 << endl;
 
     cout << "-------Population-------" << endl;
-    vector<Tour *> populationList{&tour1, &tour2, &tour3, &tour4, &tour6, &tour7, &tour8, &tour9, &tour10};
+    vector<Tour > populationList{tour1, tour2, tour3, tour4, tour6, tour7, tour8, tour9, tour10};
 //    tour1.get_tour_distance();
 
     Population originalPopulation(populationList);
     originalPopulation.findEliteSelection();
-    cout << originalPopulation << endl;
+    cout << "------Before shuffle--------" << endl;
+    cout << originalPopulation.getListTour().at(1);
+    Tour tr = originalPopulation.getListTour().at(1);
+    tr.shuffle_cities();
+    cout << "------After shuffle--------" << endl;
+//    originalPopulation.getListTour().at(1) = tr;
+    originalPopulation.getListTour().at(1).shuffle_cities();
+    cout << originalPopulation.getListTour().at(1);
+    cout << "------After shuffle--------" << endl;
+    cout << tr;
+
+//    cout << originalPopulation << endl;
     cout << "-------Mutate-------" << endl;
 //    originalPopulation.mutate();
 //    originalPopulation.select_parents();
     cout << "Cross" << endl;
+//    cout << originalPopulation << endl;
+
 //    cout << originalPopulation.select_parents();
+//    cout << originalPopulation << endl;
+    cout << "-------21-------" << endl;
 //    cout << originalPopulation.crossover();
-    originalPopulation.mergeToursCurrentPopulation();
-    cout << originalPopulation << endl;
+//    originalPopulation.mergeToursCurrentPopulation();
+//    cout << originalPopulation << endl;

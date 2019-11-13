@@ -3,6 +3,7 @@
 //
 
 #include <iostream>
+#include <algorithm>
 #include "GeneticAlgorithm.hpp"
 //constructor
 GeneticAlgorithm::GeneticAlgorithm(int city, int popsize) : CITIES_IN_TOUR{city}, POPULATION_SIZE{popsize}{
@@ -13,26 +14,32 @@ void GeneticAlgorithm::startAlgo() {
     createCities();
     createPopulation();
     population.findEliteSelection();
-    Tour* base_tour = population.getListTour().at(0);
-    double base_distance = population.getListTour().at(0)->totalDistance();
-    double best_distance = population.getListTour().at(0)->totalDistance();
+    Tour base_tour = population.getListTour().at(0);
+    double base_distance = population.getListTour().at(0).totalDistance();
+    double best_distance = population.getListTour().at(0).totalDistance();
     int iterations = 0;
     double improvement = 0.0;
     bool achieved = false;
+//    cout << population << endl;
+//    population.mergeToursCurrentPopulation();
+//    population.findEliteSelection();
+    cout << population << endl;
     while(iterations < ITERATIONS ){
         if(improvement > IMPROVEMENT_FACTOR){
             achieved = true;
             break;
         }
-        evaluateTourFitness();
+        population.mergeToursCurrentPopulation();
+        population.findEliteSelection();
+//            cout << population << endl;
         cout << "-----------------\n" << "Iteration Number: " << iterations << endl;
-        best_distance = population.getListTour().at(0)->totalDistance();
+        best_distance = population.getListTour().at(0).totalDistance();
         cout << "Best distance: " << best_distance << endl;
         improvement = (base_distance - best_distance) / base_distance;
         cout << "Current Improvement: " << improvement << endl;
         iterations++;
     }
-    printFinalReport(achieved, iterations, base_distance, best_distance, improvement, *base_tour);
+    printFinalReport(achieved, iterations, base_distance, best_distance, improvement, base_tour);
 }
 
 //initiate the master cities
@@ -46,23 +53,25 @@ void GeneticAlgorithm::createCities() {
 double GeneticAlgorithm::evaluateTourFitness() {
     population.mergeToursCurrentPopulation();
     population.findEliteSelection();
-    return population.getListTour().at(0)->determine_fitness();
+    return population.getListTour().at(0).determine_fitness();
 }
 
 //create the population and shuffle each tour of SHUFFLES
 void GeneticAlgorithm::createPopulation() {
+    vector<City*> tmpList = masterCities;
+    auto rn = default_random_engine{};
     for(int i = 0; i < POPULATION_SIZE; i++){
-        population.addListTour(new Tour(masterCities));
         for(int j = 0; j < SHUFFLES; j ++){
-            population.getListTour().at(i)->shuffle_cities();
+            shuffle(tmpList.begin(),tmpList.end(),rn);
         }
+        population.addListTour(Tour{tmpList});
     }
 }
 
 //print the final report after the genetic algorithm is completed.
 void GeneticAlgorithm::printFinalReport(bool achieved, int iterations, double base_distance, double best_distance,
                                         double improvement, Tour base_tour) {
-    cout << "-----------------\n" << "Number Iterations: " << iterations << endl;
+    cout << "---------Final Report---------\n" << "Number Iterations: " << iterations << endl;
     cout << "Base distance: " << base_distance << endl;
     cout << "Best distance: " << best_distance << endl;
     cout << "Improvement factor achieved: ";
@@ -70,19 +79,14 @@ void GeneticAlgorithm::printFinalReport(bool achieved, int iterations, double ba
     cout << str;
     cout << "Improvement: " << improvement << endl;
     cout << "Base tour route: \n" << base_tour << endl;
-    cout << "Best route take: \n" << *population.getListTour().at(0) << endl;
+    cout << "Best route take: \n" << population.getListTour().at(0) << endl;
 }
-
 //destructor delete the allocated memories
 GeneticAlgorithm::~GeneticAlgorithm() {
     while(!masterCities.empty()){
         delete masterCities.back();
-        masterCities.pop_back();
     }
-    while(!population.getListTour().empty()){
-        delete population.getListTour().back();
-        population.getListTour().pop_back();
-    }
+        masterCities.clear();
 }
 
 
