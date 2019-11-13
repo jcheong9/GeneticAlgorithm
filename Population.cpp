@@ -77,29 +77,41 @@ void Population::mergeToursCurrentPopulation() {
     tmp.push_back(listTour.at(0));
 
     for(vector<Tour>::size_type i = NUMBER_OF_ELITES; i < listTour.size(); i++) {
-        Tour childTour = crossover();
-        tmp.push_back(childTour);
+        vector<Tour> childTour = crossMultipleParents();
+        for(Tour t : childTour){
+            tmp.push_back(t);
+        }
     }
     listTour.clear();
     listTour = tmp;
 }
 
-void crossMultipleParents(){
-    vector<Tour> parents;
-    
-}
 
 //mutate of 30% of the total population and mutate at MUTATION_RATE. Mutation swap the adjacent city.
 void Population::mutate() {
     mt19937 generatorInt(rd());
-    uniform_int_distribution<> distInt(0, listTour.size() - 1);
+    uniform_int_distribution<> distInt(NUMBER_OF_ELITES, listTour.size() - 1);
     uniform_real_distribution<double> distMutate(0.0,1);
     for(vector<Tour*>::size_type i = 0; i < listTour.size() * POPULATION_MUTATION; i++) {
         int indexTour = distInt(generatorInt);
         for (vector<City *>::size_type j = 1; j < listTour.at(indexTour).getCityList().size(); j++) {
+//            double rnd = distMutate(rdEngine);
+//            cout << "mutate " << MUTATION_RATE << " Rand:" << rnd << endl;
+
             if (distMutate(rdEngine) < MUTATION_RATE ) {
+                cout << "ture mutate" <<endl;
+//                cout << "mutate " << MUTATION_RATE << " Rand:" << rnd << endl;
                 int nextInd = j - 1;
-                swap(*listTour.at(indexTour).getCityList().at(j),*listTour.at(indexTour).getCityList().at(nextInd));
+                cout << "----------------------------" << endl;
+                cout << "Index " << j << " " << nextInd << endl;
+                cout << listTour.at(indexTour) << endl;
+                City tmp = *listTour.at(indexTour).getCityList().at(j);
+                *listTour.at(indexTour).getCityList().at(j) = *listTour.at(indexTour).getCityList().at(nextInd);
+                *listTour.at(indexTour).getCityList().at(nextInd) = tmp;
+//                swap(*listTour.at(indexTour).getCityList().at(j),*listTour.at(indexTour).getCityList().at(nextInd));
+                cout << "After swap------------" << indexTour << endl;
+                cout << listTour.at(indexTour) << endl;
+                cout << "----------------------------" << endl;
             }
         }
     }
@@ -130,6 +142,28 @@ ostream &operator<<(ostream &os, const Population &m) {
         os << to_string(m.listTour.at(i).determine_fitness()) + "cost\n";
     }
     return os;
+}
+
+vector<Tour> Population::crossMultipleParents() {
+    vector<Tour> children;
+    vector<Tour> parents;
+    for(int i = 0; i < NUMBER_OF_PARENTS; i++){
+        parents.push_back(select_parents());
+    }
+    if(parents.size() == 2){
+        children.push_back(crossover(parents.at(0),parents.at(1)));
+        return children;
+    }
+    //NUMBER_OF_PARENTS greater than 2
+    for(int i = 0; i < parents.size(); i++){
+        for(int j = i; j < parents.size(); j++){
+            if(parents.at(i).getTourId() != parents.at(j).getTourId()){
+                children.push_back(crossover(parents.at(i),parents.at(j)));
+            }
+        }
+    }
+
+    return children;
 }
 
 

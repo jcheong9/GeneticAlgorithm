@@ -31,6 +31,7 @@ public:
     Tour crossover(Tour parentA, Tour parentB);
     void mergeToursCurrentPopulation();
     void mutate();
+    vector<Tour> crossMultipleParents();
 
     //setters and getters
     vector<Tour > getListTour() const;
