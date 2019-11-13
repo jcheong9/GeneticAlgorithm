@@ -13,23 +13,21 @@ default_random_engine rdEngine(time(0));
 void Population::findEliteSelection() {
     double bestFitness = listTour.at(0).determine_fitness();
     int bestIndex = 0;
-    for(int i = 0; i < listTour.size(); i++){
-        if(bestFitness < listTour.at(i).determine_fitness()){
+    for(int i = 0; i < listTour.size(); i++) {
+        if (bestFitness < listTour.at(i).determine_fitness()) {
             bestFitness = listTour.at(i).determine_fitness();
             bestIndex = i;
         }
     }
-
-    using std::swap;
     Tour tmp = listTour.at(0);
     listTour.at(0) = listTour.at(bestIndex);
     listTour.at(bestIndex) = tmp;
 }
 
 //crossing two parent return a child tour.
-Tour Population::crossover() {
-    Tour parentA = select_parents();
-    Tour parentB = select_parents();
+Tour Population::crossover(Tour parentA, Tour parentB) {
+//    Tour parentA = select_parents();
+//    Tour parentB = select_parents();
 
     mt19937 generatorInt(rd());
     uniform_int_distribution<> distInt(0, parentA.getCityList().size());
@@ -84,6 +82,11 @@ void Population::mergeToursCurrentPopulation() {
     }
     listTour.clear();
     listTour = tmp;
+}
+
+void crossMultipleParents(){
+    vector<Tour> parents;
+    
 }
 
 //mutate of 30% of the total population and mutate at MUTATION_RATE. Mutation swap the adjacent city.
