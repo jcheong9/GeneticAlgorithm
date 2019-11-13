@@ -20,10 +20,7 @@ void GeneticAlgorithm::startAlgo() {
     int iterations = 0;
     double improvement = 0.0;
     bool achieved = false;
-//    cout << population << endl;
-//    population.mergeToursCurrentPopulation();
-//    population.findEliteSelection();
-    cout << population << endl;
+
     while(iterations < ITERATIONS ){
         if(improvement > IMPROVEMENT_FACTOR){
             achieved = true;
@@ -31,7 +28,7 @@ void GeneticAlgorithm::startAlgo() {
         }
         population.mergeToursCurrentPopulation();
         population.findEliteSelection();
-//            cout << population << endl;
+
         cout << "-----------------\n" << "Iteration Number: " << iterations << endl;
         best_distance = population.getListTour().at(0).totalDistance();
         cout << "Best distance: " << best_distance << endl;

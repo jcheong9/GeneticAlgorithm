@@ -14,8 +14,8 @@ class Population{
 const int POPULATION_POOL_SIZE = 5;
 const int NUMBER_OF_ELITES = 1;
 const double POPULATION_MUTATION = 0.3;
+const int NUMBER_OF_PARENTS = 2;
 private:
-    int NUMBER_OF_PARENTS = 0;
     vector<Tour> listTour;
 public:
     // instantiate random engine
@@ -41,6 +41,6 @@ public:
     friend ostream &operator << (ostream &os, const Population &m);
 
     //destructors
-    ~Population();
+    ~Population() = default;
 };
 #endif //GENETICALGORITHM_POPULATION_HPP

@@ -30,9 +30,9 @@ void Population::findEliteSelection() {
 Tour Population::crossover() {
     Tour parentA = select_parents();
     Tour parentB = select_parents();
-    NUMBER_OF_PARENTS = NUMBER_OF_PARENTS + 2;
+
     mt19937 generatorInt(rd());
-    uniform_int_distribution<> distInt(0, parentA.getCityList().size()/2+1);
+    uniform_int_distribution<> distInt(0, parentA.getCityList().size());
     vector<City* > tmpCitiesList;
     for(vector<Tour*>::size_type i = 0; i < distInt(generatorInt); i++){
         tmpCitiesList.push_back(parentA.getCityList().at(i));
@@ -51,13 +51,6 @@ Tour Population::crossover() {
             tmpCitiesList.push_back(parentB.getCityList().at(i));
         }
     }
-//    cout << "partent A ----------" << endl;
-//    cout << parentA;
-//    cout << "partent b ----------" << endl;
-//    cout << parentB;
-//    cout << "crossing ----------" << endl;
-//    cout << Tour{tmpCitiesList};
-//    cout << "crossing ----------" << endl;
     return Tour{tmpCitiesList};
 }
 
@@ -90,12 +83,7 @@ void Population::mergeToursCurrentPopulation() {
         tmp.push_back(childTour);
     }
     listTour.clear();
-//    std::copy(begin(tmp), end(tmp), std::back_inserter(listTour));
     listTour = tmp;
-//    cout << "cross-----------------------------" << endl;
-//    for (auto r : listTour)
-//        cout << r;
-//    cout << "cross-----------------------------" << endl;
 }
 
 //mutate of 30% of the total population and mutate at MUTATION_RATE. Mutation swap the adjacent city.
@@ -137,14 +125,9 @@ ostream &operator<<(ostream &os, const Population &m) {
     for(int i = 0; i < m.listTour.size(); i++) {
         os << "Tour " + to_string(m.listTour.at(i).getTourId()) + " ";
         os << to_string(m.listTour.at(i).determine_fitness()) + "cost\n";
-//        os << m.listTour.at(i) << endl;
     }
     return os;
 }
-
-Population::~Population() {
-}
-
 
 
 

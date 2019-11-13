@@ -14,7 +14,6 @@ auto rn = default_random_engine{};
 //tour ID counter
 long Tour::tourIDCounter = 0;
 
-
 //constructor
 Tour::Tour(vector<City *> cityList) {
     this->cityList = cityList;
