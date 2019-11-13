@@ -75,6 +75,10 @@ void Population::mergeToursCurrentPopulation() {
     for(vector<Tour*>::size_type i = NUMBER_OF_ELITES; i < listTour.size(); i++) {
         tmp.push_back(crossover());
     }
+    for(vector<Tour*>::size_type i = 0; i < listTour.size(); i++) {
+        delete listTour.at(i);
+    }
+    listTour.clear();
     listTour = tmp;
 }
 
