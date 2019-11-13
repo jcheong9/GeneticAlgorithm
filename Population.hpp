@@ -35,13 +35,12 @@ public:
     //setters and getters
     vector<Tour *> getListTour() const;
     void addListTour(Tour* tour);
-    void setListTour(int index, Tour tour);
     int getNumberOfParents() const;
 
     //overloading operators
     friend ostream &operator << (ostream &os, const Population &m);
 
     //destructors
-    ~Population() = default;
+    ~Population();
 };
 #endif //GENETICALGORITHM_POPULATION_HPP

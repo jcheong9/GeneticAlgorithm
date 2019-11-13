@@ -14,8 +14,8 @@ void GeneticAlgorithm::startAlgo() {
     createPopulation();
     population.findEliteSelection();
     Tour* base_tour = population.getListTour().at(0);
-    double base_distance = population.getListTour().at(0)->determine_fitness();
-    double best_distance = population.getListTour().at(0)->determine_fitness();
+    double base_distance = population.getListTour().at(0)->totalDistance();
+    double best_distance = population.getListTour().at(0)->totalDistance();
     int iterations = 0;
     double improvement = 0.0;
     bool achieved = false;
@@ -24,10 +24,11 @@ void GeneticAlgorithm::startAlgo() {
             achieved = true;
             break;
         }
+        evaluateTourFitness();
         cout << "-----------------\n" << "Iteration Number: " << iterations << endl;
-        best_distance = evaluateTourFitness();
+        best_distance = population.getListTour().at(0)->totalDistance();
         cout << "Best distance: " << best_distance << endl;
-        improvement = (best_distance - base_distance) / base_distance;
+        improvement = (base_distance - best_distance) / base_distance;
         cout << "Current Improvement: " << improvement << endl;
         iterations++;
     }
