@@ -29,6 +29,7 @@ void Population::findEliteSelection() {
 
 //crossing two parent return a child tour.
 Tour Population::crossover() {
+    //pick the two parent
     Tour parentA = select_parents();
     Tour parentB = select_parents();
 
@@ -60,7 +61,7 @@ Tour Population::crossover() {
 Tour Population::select_parents() {
     mt19937 generatorInt(rd());
     uniform_int_distribution<> distInt(0, listTour.size()-1);
-    //create sets
+    //create sets of tours
     vector<Tour> tempTour;
     for(int i = 0; i < POPULATION_POOL_SIZE; i++){
         tempTour.push_back(listTour.at(distInt(generatorInt)));
@@ -81,43 +82,30 @@ void Population::mergeToursCurrentPopulation() {
     tmp.push_back(listTour.at(0));
 
     for(vector<Tour>::size_type i = NUMBER_OF_ELITES; i < listTour.size(); i++) {
-        vector<Tour> childTour = crossMultipleParents();
-        for(Tour t : childTour){
-            tmp.push_back(t);
-        }
+            tmp.push_back(crossover());
     }
+
     listTour.clear();
     listTour = tmp;
 }
 
-
-//mutate of 30% of the total population and mutate at MUTATION_RATE. Mutation swap the adjacent city.
+//mutate of randomly 20 to 30 of the total population and mutate at MUTATION_RATE. Mutation swap the adjacent city.
 void Population::mutate() {
     mt19937 generatorInt(rd());
     uniform_int_distribution<> distInt(NUMBER_OF_ELITES, listTour.size() - 1);
     uniform_real_distribution<double> distMutate(0.0,1);
-    for(vector<Tour*>::size_type i = 1; i < listTour.size() * POPULATION_MUTATION; i++) {
+    uniform_real_distribution<double> distPopulationMutation(0.2,0.3);
+    cout << "Pop Mutation " << distPopulationMutation(rdEngine) << endl;
+    for(vector<Tour*>::size_type i = 1; i < listTour.size() * distPopulationMutation(rdEngine); i++) {
         int indexTour = distInt(generatorInt);
         vector<City*> listCityTmp = listTour.at(indexTour).getCityList();
         for (vector<City *>::size_type j = 1; j < listTour.at(indexTour).getCityList().size(); j++) {
-//            double rnd = distMutate(rdEngine);
-//            cout << "mutate " << MUTATION_RATE << " Rand:" << rnd << endl;
-//            cout<< "mutate tour id: " << listTour.at(indexTour).getTourId() << endl;
+
             if (distMutate(rdEngine) < MUTATION_RATE ) {
-//                cout << "ture mutate" <<endl;
-//                cout << "mutate " << MUTATION_RATE << " Rand:" << rnd << endl;
                 int nextInd = j - 1;
-//                cout << "Index " << j << " " << nextInd << endl;
                 City* tmp = listCityTmp.at(j);
                 listCityTmp.at(j) = listCityTmp.at(nextInd);
                 listCityTmp.at(nextInd) = tmp;
-//                cout << "---------------listTour-------------" << endl;
-//                cout << listTour.at(indexTour) << endl;
-
-//                swap(*listTour.at(indexTour).getCityList().at(j),*listTour.at(indexTour).getCityList().at(nextInd));
-//                cout << "After swap------------" << indexTour << endl;
-//                cout << listTour.at(indexTour) << endl;
-//                cout << "----------------------------" << endl;
             }
         }
         listTour.at(indexTour).setCityList(listCityTmp);
@@ -151,28 +139,6 @@ ostream &operator<<(ostream &os, const Population &m) {
         os << "---------------------------------------------" << endl;
     }
     return os;
-}
-
-vector<Tour> Population::crossMultipleParents() {
-    vector<Tour> children;
-    vector<Tour> parents;
-    for(int i = 0; i < NUMBER_OF_PARENTS; i++){
-        parents.push_back(select_parents());
-    }
-    if(parents.size() == 2){
-        children.push_back(crossover());
-        return children;
-    }
-    //NUMBER_OF_PARENTS greater than 2
-    for(int i = 0; i < parents.size(); i++){
-        for(int j = i; j < parents.size(); j++){
-            if(parents.at(i).getTourId() != parents.at(j).getTourId()){
-                children.push_back(crossover());
-            }
-        }
-    }
-
-    return children;
 }
 
 

@@ -30,7 +30,7 @@ public:
     void setY(double y);
     long getCityId() const;
     void setCityId(long cityId);
-
+    //destructor
     ~City() = default;
 
 };

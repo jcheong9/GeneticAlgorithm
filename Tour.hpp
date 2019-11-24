@@ -26,7 +26,6 @@ public:
 
     //function prototype
     double totalDistance() const;
-    void shuffle_cities();
     double determine_fitness() const;
     void get_tour_distance();
     double get_distance_between_cities(City city1, City city2) const;

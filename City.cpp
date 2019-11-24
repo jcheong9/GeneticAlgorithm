@@ -14,7 +14,7 @@ City::City() {
     y = distDoubleY(randomEngine);
     cityID = cityIDCounter++;
 }
-
+//getters and setters
 double City::getX() const {
     return x;
 }
@@ -38,14 +38,14 @@ long City::getCityId() const {
 void City::setCityId(long cityId) {
     cityID = cityId;
 }
-
+// swap helper function
 void City::swapping(City& a, City b) {
     using std::swap;
     swap(a.cityID,b.cityID);
     swap(a.x,b.x);
     swap(a.y,b.y);
 }
-
+//equal overloading
 City &City::operator=(const City &m)  {
     swapping(*this, m);
     return *this;

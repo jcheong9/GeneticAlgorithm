@@ -83,15 +83,15 @@ void Tour::mutateCities(int a, int b) {
 vector<City *> Tour::getCityList() const{
     return cityList;
 }
-
+//set the city list
 void Tour::setCityList(const vector<City *> cityList) {
     Tour::cityList = cityList;
 }
-
+//get the tour id
 long Tour::getTourId() const {
     return tourID;
 }
-
+//equal overloading
 Tour& Tour::operator=(Tour &m) {
     using std::swap;
     swap(this->cityList,m.cityList);

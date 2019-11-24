@@ -20,32 +20,12 @@ void GeneticAlgorithm::startAlgo() {
     int iterations = 0;
     double improvement = 0.0;
     bool achieved = false;
-//    cout << population << endl;
-    cout << "Master list before-------------------" <<endl;
-    for(City* masterCitie : masterCities)
-        cout << masterCitie->getCityId() << endl;
-    while(iterations < ITERATIONS ){
-        population.mergeToursCurrentPopulation();
-//        cout << "population merge" <<endl;
-//        cout << "---------Before Mutate-------------------" <<endl;
-//        cout << population <<endl;
-//        cout << "MAster list merge------------" << endl;
-//        for(City* p : masterCities){
-//            cout << p->getCityId() << endl;
-//        }
 
+    while(iterations < ITERATIONS ){
+        population.mergeToursCurrentPopulation(); //cross and merge the children with the new list
         population.mutate();
-//        cout << "Master list After-------------------" <<endl;
-//        for(City* masterCitie : masterCities)
-//            cout << masterCitie->getCityId() << endl;
-        cout << population <<endl;
-//        cout << "MAster list mutate" << endl;
-//        for(City* p : masterCities){
-//            cout << p->getCityId() << endl;
-//        }
-        cout << "population find elite-------------------" <<endl;
         population.findEliteSelection();
-//        cout << population << endl;
+
         best_distance = population.getListTour().at(0).totalDistance();
         improvement = best_distance / base_distance ;
         if(improvement <= IMPROVEMENT_FACTOR){
@@ -57,9 +37,6 @@ void GeneticAlgorithm::startAlgo() {
         cout << "Current Improvement: " << 1.0-improvement << endl;
         iterations++;
     }
-    cout << "Master list after-------------------" <<endl;
-    for(City* masterCitie : masterCities)
-        cout << masterCitie->getCityId() << endl;
 
     printFinalReport(achieved, iterations, base_distance, best_distance, improvement, base_tour);
 }
@@ -69,13 +46,6 @@ void GeneticAlgorithm::createCities() {
     for(int i = 0; i < CITIES_IN_TOUR; i++ ){
         masterCities.push_back(new City());
     }
-}
-
-// find the best fitness after crossover and mutate
-double GeneticAlgorithm::evaluateTourFitness() {
-    population.mergeToursCurrentPopulation();
-    population.findEliteSelection();
-    return population.getListTour().at(0).determine_fitness();
 }
 
 //create the population and shuffle each tour of SHUFFLES

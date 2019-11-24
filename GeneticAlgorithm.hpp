@@ -11,7 +11,7 @@
 
 class GeneticAlgorithm {
 const double IMPROVEMENT_FACTOR = 0.75;
-const int ITERATIONS = 100;
+const int ITERATIONS = 1000;
 const int SHUFFLES = 64;
 private:
     int CITIES_IN_TOUR;
@@ -27,7 +27,6 @@ public:
     void createCities();
     void printFinalReport(bool achieved, int iterations, double distance, double distance1,
             double improvement, Tour tour);
-    double evaluateTourFitness();
     void createPopulation();
     //destructor
     ~GeneticAlgorithm();
