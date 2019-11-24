@@ -18,8 +18,6 @@ const int NUMBER_OF_PARENTS = 2;
 private:
     vector<Tour> listTour;
 public:
-    // instantiate random engine
-    random_device rd;
 
     //constructors
     Population() = default;
@@ -28,7 +26,7 @@ public:
     //function prototypes
     void findEliteSelection();
     Tour select_parents();
-    Tour crossover(Tour parentA, Tour parentB);
+    Tour crossover();
     void mergeToursCurrentPopulation();
     void mutate();
     vector<Tour> crossMultipleParents();

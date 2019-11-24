@@ -17,25 +17,27 @@ void GeneticAlgorithm::startAlgo() {
     Tour base_tour = population.getListTour().at(0);
     double base_distance = population.getListTour().at(0).totalDistance();
     double best_distance = population.getListTour().at(0).totalDistance();
-    int iterations = 0;
+    int iterations = 1;
     double improvement = 0.0;
     bool achieved = false;
-    cout << population << endl;
-
+//    cout << population << endl;
+    cout << "Master list before-------------------" <<endl;
+    for(City* masterCitie : masterCities)
+        cout << masterCitie->getCityId() << endl;
     while(iterations < ITERATIONS ){
-        if(improvement > IMPROVEMENT_FACTOR){
-            achieved = true;
-            break;
-        }
         population.mergeToursCurrentPopulation();
-        cout << "population merge" <<endl;
+//        cout << "population merge" <<endl;
+        cout << "---------Before Mutate-------------------" <<endl;
         cout << population <<endl;
-        cout << "MAster list merge" << endl;
+        cout << "MAster list merge------------" << endl;
         for(City* p : masterCities){
             cout << p->getCityId() << endl;
         }
+
         population.mutate();
-        cout << "population mutate-------------------" <<endl;
+//        cout << "Master list After-------------------" <<endl;
+//        for(City* masterCitie : masterCities)
+//            cout << masterCitie->getCityId() << endl;
         cout << population <<endl;
         cout << "MAster list mutate" << endl;
         for(City* p : masterCities){
@@ -43,15 +45,20 @@ void GeneticAlgorithm::startAlgo() {
         }
         cout << "population find elite-------------------" <<endl;
         population.findEliteSelection();
-        cout << population << endl;
-//        cout << "-----------------\n" << "Iteration Number: " << iterations << endl;
-//        best_distance = population.getListTour().at(0).totalDistance();
-//        cout << "Best distance: " << best_distance << endl;
-        improvement = (base_distance - best_distance) / base_distance;
-//        cout << "Current Improvement: " << improvement << endl;
+//        cout << population << endl;
+        if(improvement <= IMPROVEMENT_FACTOR){
+            achieved = true;
+            break;
+        }
+        cout << "-----------------\n" << "Iteration Number: " << iterations << endl;
+        best_distance = population.getListTour().at(0).totalDistance();
+        cout << "Best distance: " << best_distance << endl;
+        improvement = best_distance / base_distance ;
+        cout << "Current Improvement: " << 1.0-improvement << endl;
         iterations++;
     }
-//    printFinalReport(achieved, iterations, base_distance, best_distance, improvement, base_tour);
+
+    printFinalReport(achieved, iterations, base_distance, best_distance, improvement, base_tour);
 }
 
 //initiate the master cities
@@ -73,16 +80,10 @@ void GeneticAlgorithm::createPopulation() {
     vector<City*> tmpList = masterCities;
     auto rn = default_random_engine{};
     for(int i = 0; i < POPULATION_SIZE; i++){
-//        cout << "Before shff" << endl;
-//        for(City *a : tmpList)
-//            cout << a <<endl;
         for(int j = 0; j < SHUFFLES; j ++){
             shuffle(tmpList.begin(),tmpList.end(),rn);
         }
         population.addListTour(Tour{tmpList});
-//        cout << "Adter shff" << endl;
-//        for(City *a : tmpList)
-//            cout << a <<endl;
     }
 }
 
@@ -95,7 +96,7 @@ void GeneticAlgorithm::printFinalReport(bool achieved, int iterations, double ba
     cout << "Improvement factor achieved: ";
     string str = achieved ? ("true\n") : ("false\n");
     cout << str;
-    cout << "Improvement: " << improvement << endl;
+    cout << "Improvement: " << 1.0-improvement << endl;
     cout << "Base tour route: \n" << base_tour << endl;
     cout << "Best route take: \n" << population.getListTour().at(0) << endl;
 }
