@@ -9,7 +9,7 @@
 GeneticAlgorithm::GeneticAlgorithm(int city, int popsize) : CITIES_IN_TOUR{city}, POPULATION_SIZE{popsize}{
     startAlgo();
 }
-//starts the algorithm
+//starts the algorithm, prints each iteration and the final report.
 void GeneticAlgorithm::startAlgo() {
     createCities();
     createPopulation();
@@ -27,7 +27,7 @@ void GeneticAlgorithm::startAlgo() {
         population.findEliteSelection();
 
         best_distance = population.getListTour().at(0).totalDistance();
-        improvement = best_distance / base_distance ;
+        improvement = best_distance / base_distance;
         if(improvement <= IMPROVEMENT_FACTOR){
             achieved = true;
             break;
