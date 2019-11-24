@@ -102,17 +102,17 @@ void Population::mutate() {
         for (vector<City *>::size_type j = 1; j < listTour.at(indexTour).getCityList().size(); j++) {
 //            double rnd = distMutate(rdEngine);
 //            cout << "mutate " << MUTATION_RATE << " Rand:" << rnd << endl;
-            cout<< "mutate index: " << listTour.at(indexTour).getTourId() << endl;
+//            cout<< "mutate tour id: " << listTour.at(indexTour).getTourId() << endl;
             if (distMutate(rdEngine) < MUTATION_RATE ) {
 //                cout << "ture mutate" <<endl;
 //                cout << "mutate " << MUTATION_RATE << " Rand:" << rnd << endl;
                 int nextInd = j - 1;
-//                cout << "----------------------------" << endl;
 //                cout << "Index " << j << " " << nextInd << endl;
-//                cout << listTour.at(indexTour) << endl;
                 City* tmp = listCityTmp.at(j);
                 listCityTmp.at(j) = listCityTmp.at(nextInd);
                 listCityTmp.at(nextInd) = tmp;
+//                cout << "---------------listTour-------------" << endl;
+//                cout << listTour.at(indexTour) << endl;
 
 //                swap(*listTour.at(indexTour).getCityList().at(j),*listTour.at(indexTour).getCityList().at(nextInd));
 //                cout << "After swap------------" << indexTour << endl;
