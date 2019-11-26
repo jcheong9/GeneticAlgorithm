@@ -95,7 +95,7 @@ void Population::mutate() {
     uniform_int_distribution<> distInt(NUMBER_OF_ELITES, listTour.size() - 1);
     uniform_real_distribution<double> distMutate(0.0,1);
     uniform_real_distribution<double> distPopulationMutation(0.2,0.3);
-    cout << "Pop Mutation " << distPopulationMutation(rdEngine) << endl;
+
     for(vector<Tour*>::size_type i = 1; i < listTour.size() * distPopulationMutation(rdEngine); i++) {
         int indexTour = distInt(generatorInt);
         vector<City*> listCityTmp = listTour.at(indexTour).getCityList();
