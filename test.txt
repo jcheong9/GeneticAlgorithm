@@ -47,7 +47,7 @@
 
     cout << "-------Population-------" << endl;
     vector<Tour > populationList{tour1, tour2, tour3, tour4, tour6, tour7, tour8, tour9, tour10};
-//    tour1.get_tour_distance();
+//    tour1.print_tour_distance();
 
     Population originalPopulation(populationList);
     originalPopulation.findEliteSelection();

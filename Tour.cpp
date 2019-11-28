@@ -44,7 +44,7 @@ double Tour::get_distance_between_cities(City city1, City city2) const {
 }
 
 // get the distance and print and display
-void Tour::get_tour_distance() {
+void Tour::print_tour_distance() {
     for(vector<City>::size_type i = 1; i < cityList.size(); i++){
         cout << "Cities distance between in this tour list CityID: " << cityList.at(i)->getCityId() << " & CityID: "
         << cityList.at(i - 1)->getCityId() << " : "
@@ -109,6 +109,10 @@ ostream &operator<<(ostream &os, const Tour &m) {
         os << "y: " +to_string(m.cityList.at(i)->getY()) << endl;
     }
     return os;
+}
+
+double Tour::get_tour_distance() {
+    return totalDistance();
 }
 
 

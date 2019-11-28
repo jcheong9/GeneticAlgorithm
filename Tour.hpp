@@ -27,7 +27,8 @@ public:
     //function prototype
     double totalDistance() const;
     double determine_fitness() const;
-    void get_tour_distance();
+    void print_tour_distance();
+    double get_tour_distance();
     double get_distance_between_cities(City city1, City city2) const;
     bool contains_city(City city);
     void mutateCities(int a, int b);

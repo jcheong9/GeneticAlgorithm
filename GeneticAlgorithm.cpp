@@ -77,6 +77,7 @@ void GeneticAlgorithm::printFinalReport(bool achieved, int iterations, double ba
 GeneticAlgorithm::~GeneticAlgorithm() {
     while(!masterCities.empty()){
         delete masterCities.back();
+        masterCities.pop_back();
     }
         masterCities.clear();
 }
