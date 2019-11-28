@@ -13,6 +13,7 @@ GeneticAlgorithm::GeneticAlgorithm(int city, int popsize) : CITIES_IN_TOUR{city}
 void GeneticAlgorithm::startAlgo() {
     createCities();
     createPopulation();
+    double iteration_distance;
     population.findEliteSelection();
     Tour base_tour = population.getListTour().at(0);
     double base_distance = population.getListTour().at(0).totalDistance();
@@ -20,32 +21,33 @@ void GeneticAlgorithm::startAlgo() {
     int iterations = 0;
     double improvement = 0.0;
     bool achieved = false;
-    printIteration(1, best_distance, iterations);
-    iterations++;
+    printIteration(1, best_distance, best_distance, iterations);
+
     while(iterations < ITERATIONS ){
+        iterations++;
         population.mergeToursCurrentPopulation(); //cross and merge the children with the new list
         population.mutate();
+        iteration_distance = best_distance;
         population.findEliteSelection();
-
         best_distance = population.getListTour().at(0).totalDistance();
         improvement = best_distance / base_distance;
         if(improvement <= IMPROVEMENT_FACTOR){
             achieved = true;
             break;
         }
-
-        printIteration(improvement, best_distance, iterations);
-        iterations++;
+        printIteration(improvement, best_distance, iteration_distance, iterations);
     }
 
     printFinalReport(achieved, iterations, base_distance, best_distance, improvement, base_tour);
 }
 
 //print iteration info
-void GeneticAlgorithm::printIteration(double improvement, double best_distance, int iterations){
+void GeneticAlgorithm::printIteration(double improvement, double best_distance, double iteration_distance, int iterations){
     cout << "-----------------\n" << "Iteration Number: " << iterations << endl;
+    cout << "Iterations distance: " << iteration_distance << endl;
     cout << "Best distance: " << best_distance << endl;
-    cout << "Current Improvement: " << 1.0-improvement << endl;
+    cout << "Current iteration Improvement: " << 1.0-best_distance/iteration_distance << endl;
+    cout << "Total Improvement: " << 1.0-improvement << endl;
 }
 
 //initiate the master cities
