@@ -1,7 +1,7 @@
 //
 // Created by jcheong on 2019-11-25.
 
-#define CATCH_CONFIG_MAIN
+//#define CATCH_CONFIG_MAIN
 
 #include "catch.hpp"
 #include "Tour.hpp"

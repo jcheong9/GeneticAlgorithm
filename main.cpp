@@ -6,9 +6,9 @@
 #include "Population.hpp"
 #include "UI.hpp"
 
-//using namespace std;
-//int main() {
-//    UI::start();
-//    return 0;
-//}
+using namespace std;
+int main() {
+    UI::start();
+    return 0;
+}
 
