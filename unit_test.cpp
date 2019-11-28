@@ -9,7 +9,7 @@
 #include "City.hpp"
 #include "GeneticAlgorithm.hpp"
 #include "UI.hpp"
-
+/*
 TEST_CASE("Test", "test") {
     REQUIRE(1 == 1);
 }
@@ -69,4 +69,4 @@ TEST_CASE("Test mergeToursCurrentPopulation", "population") {
     REQUIRE(listTour.size() == listTourMerge.size());
 }
 
-
+*/
