@@ -20,7 +20,7 @@ void GeneticAlgorithm::startAlgo() {
     int iterations = 0;
     double improvement = 0.0;
     bool achieved = false;
-    printIteration(improvement, best_distance, iterations);
+    printIteration(1, best_distance, iterations);
     iterations++;
     while(iterations < ITERATIONS ){
         population.mergeToursCurrentPopulation(); //cross and merge the children with the new list
@@ -33,9 +33,7 @@ void GeneticAlgorithm::startAlgo() {
             achieved = true;
             break;
         }
-//        cout << "-----------------\n" << "Iteration Number: " << iterations << endl;
-//        cout << "Best distance: " << best_distance << endl;
-//        cout << "Current Improvement: " << 1.0-improvement << endl;
+
         printIteration(improvement, best_distance, iterations);
         iterations++;
     }
