@@ -27,6 +27,7 @@ public:
     void createCities();
     void printFinalReport(bool achieved, int iterations, double distance, double distance1,
             double improvement, Tour tour);
+    void printIteration(double improvement,double best_distance,int iterations);
     void createPopulation();
     //destructor
     ~GeneticAlgorithm();
